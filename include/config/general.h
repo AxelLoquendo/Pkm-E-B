@@ -73,7 +73,7 @@
 #define GEN_LATEST GEN_9
 
 // Configuraciones generales
-#define EXPANSION_INTRO              TRUE    // Si está habilitado, se reproducirá una introducción personalizada de RHH después de la pantalla de derechos de autor original.
+#define EXPANSION_INTRO              FALSE    // Si está habilitado, se reproducirá una introducción personalizada de RHH después de la pantalla de derechos de autor original.
 #define HQ_RANDOM                    TRUE    // Si está habilitado, reemplaza el RNG predeterminado con una implementación del RNG SFC32. Puede romper el código que depende del RNG.
 #define PHONEMES_SHARED              FALSE   // If TRUE, bard phonemes all reference the same sound (sound/direct_sound_samples/phonemes/shared.bin) to save ROM space.
 
