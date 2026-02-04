@@ -3,7 +3,7 @@
 
 // Configuración de movimiento
 #define OW_RUNNING_INDOORS          GEN_LATEST  // En Gen4+, los jugadores pueden correr en interiores.
-#define SLOW_MOVEMENT_ON_STAIRS     FALSE       // Si está habilitado, el jugador se moverá más despacio en las escaleras, como en FRLG.
+#define SLOW_MOVEMENT_ON_STAIRS     TRUE       // Si está habilitado, el jugador se moverá más despacio en las escaleras, como en FRLG.
 
 // Otras configuraciones
 #define OW_POISON_DAMAGE                GEN_LATEST // En Gen4, los Pokémon ya no se desmayan por Veneno en el mundo exterior. En Gen5+, no reciben daño en absoluto.
@@ -11,13 +11,13 @@
 #define OW_HIDE_REPEAT_MAP_POPUP        FALSE      // Si está habilitado, las ventanas emergentes del mapa no aparecerán si entras en un mapa con el mismo Id de Sección del Mapa que el último.
 #define OW_WHITEOUT_CUTSCENE            GEN_LATEST // In Gen4+, whiting out shows an additional message and post whiteout event script cutscene with a healing NPC. (While this change was also in FRLG, for the sake of simplicity, setting this to GEN_3 will result in RSE behavior.)
 #define OW_DEFOG_FIELD_MOVE             FALSE      // Si está habilitado, Despejar puede usarse fuera de batalla como en DPPt.
-#define OW_ROCK_CLIMB_FIELD_MOVE        FALSE      // If enabled, Rock Climb can be used as a Field Move as seen in DPPt.
+#define OW_ROCK_CLIMB_FIELD_MOVE        TRUE      // If enabled, Rock Climb can be used as a Field Move as seen in DPPt.
 
 // Item Obtain Description Box
 #define OW_ITEM_DESCRIPTIONS_OFF        0   // Nunca muestra descripciones
 #define OW_ITEM_DESCRIPTIONS_FIRST_TIME 1   // Solo muestra descripciones la primera vez (** Rompe partidas guardadas - mira struct SaveBlock3 **)
 #define OW_ITEM_DESCRIPTIONS_ALWAYS     2   // Siempre muestra descripciones
-#define OW_SHOW_ITEM_DESCRIPTIONS       OW_ITEM_DESCRIPTIONS_OFF    // Si está habilitado, se mostrarán descripciones de objetos al recibirlos.
+#define OW_SHOW_ITEM_DESCRIPTIONS       OW_ITEM_DESCRIPTIONS_ALWAYS    // Si está habilitado, se mostrarán descripciones de objetos al recibirlos.
 
 // Estas definiciones generacionales solo hacen una distinción para Bayas y el OW_PC_MOVE_ORDER
 #define GEN_6_XY GEN_6
@@ -57,10 +57,10 @@
 #define OW_MON_WANDER_WALK             TRUE       // Si TRUE, los OW de Pokémon con MOVEMENT_TYPE_WANDER andarán en el sitio entre pasos.
 
 // Pokémon seguidores
-#define OW_FOLLOWERS_ENABLED           FALSE      // Habilita Pokémon seguidores, al estilo de HGSS. Requiere OW_POKEMON_OBJECT_EVENTS. ¡Nota que puede ser necesaria una programación adicional para que se soporten completamente!
+#define OW_FOLLOWERS_ENABLED           TRUE      // Habilita Pokémon seguidores, al estilo de HGSS. Requiere OW_POKEMON_OBJECT_EVENTS. ¡Nota que puede ser necesaria una programación adicional para que se soporten completamente!
 #define OW_FOLLOWERS_BOBBING           TRUE       // Si es verdadero, los Pokémon seguidores se moverán hacia arriba y hacia abajo durante sus animaciones de inactividad y caminata.
 #define OW_FOLLOWERS_POKEBALLS         TRUE       // Los seguidores emergerán de la Pokébola en la que están almacenados, en lugar de una Pokébola normal
-#define OW_FOLLOWERS_WEATHER_FORMS     FALSE      // Si TRUE, Castform y Cherrim ganan FORM_CHANGE_OVERWORLD_WEATHER, lo que los hace transformarse según el clima.
+#define OW_FOLLOWERS_WEATHER_FORMS     TRUE      // Si TRUE, Castform y Cherrim ganan FORM_CHANGE_OVERWORLD_WEATHER, lo que los hace transformarse según el clima.
 #define OW_FOLLOWERS_COPY_WILD_PKMN    FALSE      // Si TRUE, Pokémon followers que conocen Transformación o tienen Ilusión/Impostor copiarán Pokémon salvajes aleatoriamente.
 #define OW_BATTLE_ONLY_FORMS           TRUE       // Si TRUE, carga sprites de OW para Pokémon que son solo formas de batalla, como las Megas. Requiere OW_POKEMON_OBJECT_EVENTS.
 #define B_FLAG_FOLLOWERS_DISABLED      0          // Habilita / Deshabilita followers por flag. Es útil si quieres deshabilitar followers por un período de tiempo.
@@ -93,8 +93,8 @@
 #define OW_TIMES_OF_DAY                 GEN_LATEST      // Diferentes generaciones cambian los tiempos del día en diferentes momentos.
 #define OW_USE_FAKE_RTC                 FALSE           // Cuando es TRUE, los segundos en el reloj del juego solo avanzarán una vez cada 60 playTimeVBlanks (cada 60 fotogramas).
 #define OW_ALTERED_TIME_RATIO           GEN_LATEST      // En GEN_8_PLA, el tiempo en el juego avanza 60 segundos por cada segundo en el RTC. En GEN_9, son 20 segundos. Esto no tiene efecto si OW_USE_FAKE_RTC es FALSE.
-#define OW_TIME_OF_DAY_ENCOUNTERS       FALSE           // Si está habilitada, permite al usuario utilizar diferentes tablas de encuentros con Pokémon salvajes según la hora del día.
-#define OW_TIME_OF_DAY_DISABLE_FALLBACK FALSE           // Si está habilitada, si la tabla de encuentros con Pokémon salvajas para un mapa y tiempo específicos está vacía, el área no tendrá Pokémon en vez de utilizar las de vanilla.
+#define OW_TIME_OF_DAY_ENCOUNTERS       TRUE           // Si está habilitada, permite al usuario utilizar diferentes tablas de encuentros con Pokémon salvajes según la hora del día.
+#define OW_TIME_OF_DAY_DISABLE_FALLBACK TRUE           // Si está habilitada, si la tabla de encuentros con Pokémon salvajas para un mapa y tiempo específicos está vacía, el área no tendrá Pokémon en vez de utilizar las de vanilla.
 #define OW_TIME_OF_DAY_FALLBACK         TIME_MORNING    // La parte del día al que la tabla irá por defecto.
 
 // DNS
@@ -117,7 +117,7 @@
 #define BATTLE_PYRAMID_RANDOM_ENCOUNTERS    FALSE    // Si se establece en TRUE, los Pokémon de la pirámide de batalla se generarán aleatoriamente en función del desafío de la ronda en lugar de estar codificados en src/data/battle_frontier/battle_pyramid_level_50_wild_mons.h (o open_level_wild_mons.h)
 
 // Configuración de ventanas emergentes del mapa
-#define OW_POPUP_GENERATION        GEN_3    // Diferentes generaciones muestran los nombres de ubicación en las ventanas emergentes del mundo exterior de manera diferente.
+#define OW_POPUP_GENERATION        GEN_5    // Diferentes generaciones muestran los nombres de ubicación en las ventanas emergentes del mundo exterior de manera diferente.
                                             // Solo las opciones actuales son GEN_3 y GEN_5, todas las demás se ajustarán a las ventanas emergentes de Gen3.
 
 // Configuración de ventanas emergentes del mapa Gen5
@@ -131,8 +131,8 @@
 
 // Configuración
 #define OW_POPUP_BW_COLOR          OW_POPUP_BW_COLOR_BLACK  // B2W2 usan diferentes colores para sus ventanas emergentes del mapa.
-#define OW_POPUP_BW_TIME_MODE      OW_POPUP_BW_TIME_NONE    // Determina qué tipo de hora se muestra.
-#define OW_POPUP_BW_ALPHA_BLEND    FALSE                    // Habilita el mezclado alfa/transparencia para las ventanas emergentes. Principalmente destinado a usarse con la opción de color negro.
+#define OW_POPUP_BW_TIME_MODE      OW_POPUP_BW_TIME_12_HR    // Determina qué tipo de hora se muestra.
+#define OW_POPUP_BW_ALPHA_BLEND    TRUE                    // Habilita el mezclado alfa/transparencia para las ventanas emergentes. Principalmente destinado a usarse con la opción de color negro.
                                                             // It will also cause minor visual glitches of shadow and reflection sprites adjusting their transparency when the pop-up disappear
 
 // Centro Pokémon
