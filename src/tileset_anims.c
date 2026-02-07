@@ -565,15 +565,19 @@ void InitSecondaryTilesetAnimation(void)
 void UpdateTilesetAnimations(void)
 {
     ResetTilesetAnimBuffer();
-    if (++sPrimaryTilesetAnimCounter >= sPrimaryTilesetAnimCounterMax)
-        sPrimaryTilesetAnimCounter = 0;
-    if (++sSecondaryTilesetAnimCounter >= sSecondaryTilesetAnimCounterMax)
-        sSecondaryTilesetAnimCounter = 0;
 
-    if (sPrimaryTilesetAnimCallback)
-        sPrimaryTilesetAnimCallback(sPrimaryTilesetAnimCounter);
-    if (sSecondaryTilesetAnimCallback)
-        sSecondaryTilesetAnimCallback(sSecondaryTilesetAnimCounter);
+    // Insertamos tu interruptor aquí
+    #if OW_TILESET_ANIMATIONS
+        if (++sPrimaryTilesetAnimCounter >= sPrimaryTilesetAnimCounterMax)
+            sPrimaryTilesetAnimCounter = 0;
+        if (++sSecondaryTilesetAnimCounter >= sSecondaryTilesetAnimCounterMax)
+            sSecondaryTilesetAnimCounter = 0;
+
+        if (sPrimaryTilesetAnimCallback)
+            sPrimaryTilesetAnimCallback(sPrimaryTilesetAnimCounter);
+        if (sSecondaryTilesetAnimCallback)
+            sSecondaryTilesetAnimCallback(sSecondaryTilesetAnimCounter);
+    #endif
 }
 
 static void _InitPrimaryTilesetAnimation(void)

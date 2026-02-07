@@ -8,4 +8,6 @@
 #define PBH_HUEVOS_COLOR_TIPO               TRUE    // Si está habilitado, los huevos tienen el color de los tipos del Pokémon que vaya dentro. Créditos a CitrusBolt.
 #define PBH_ICONOS_TIPOS_BATALLA            TRUE    // Si está habilitado, se mostrará el icono de tipo en batalla en vez de Tipo/..., el icono de categoría y la efectividad.
 
+#define OW_TILESET_ANIMATIONS  FALSE  // Cambia a TRUE cuando quieras ver las animaciones
+
 #endif // GUARD_CONFIG_PBH_H
