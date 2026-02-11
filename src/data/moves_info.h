@@ -14655,7 +14655,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .name = COMPOUND_STRING("Rugido de guerra"),
         .description = COMPOUND_STRING(
             "Intimida para bajar ataque\n"
-            "y defensa especiales."),
+            "y ataque especial."),
         .effect = EFFECT_NOBLE_ROAR,
         .power = 0,
         .type = TYPE_NORMAL,
