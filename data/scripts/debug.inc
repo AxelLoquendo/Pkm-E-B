@@ -160,6 +160,8 @@ trainerbattle_single TRAINER_BRENDAN_PLACEHOLDER, BrendanIntroText, BrendanLoseT
 Debug_EventScript_Script_2::
 	setflag FLAG_DYNAMAX_BATTLE
 	setflag FLAG_TERA_ORB_NO_COST
+	additem ITEM_DYNAMAX_BAND
+	additem ITEM_TERA_ORB
 	release
 	end
 
