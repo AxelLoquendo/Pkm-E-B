@@ -19,6 +19,8 @@
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
 
+#include "config/pbh.h"
+
 // Most of the boxes in the moving truck are map tiles, with the
 // exception of three boxes that are map events that jostle around
 // while the truck is driving. In addition, their sprite's placement
@@ -88,6 +90,13 @@ static s16 GetTruckBoxYMovement(int time)
 
 static void Task_Truck1(u8 taskId)
 {
+#if SKIP_INTRO_SEQUENCE == TRUE
+    // 1. Destruimos la tarea para que deje de ejecutarse
+    DestroyTask(taskId);
+    // 2. Reseteamos el paneo de cámara por si acaso alcanzó a moverse 1 píxel
+    SetCameraPanning(0, 0);
+#else
+    // Aquí el código original para cuando NO saltamos la intro
     s16 *data = gTasks[taskId].data;
     s16 cameraXpan = 0, cameraYpan = 0;
     s16 yBox1, yBox2, yBox3;
@@ -99,14 +108,13 @@ static void Task_Truck1(u8 taskId)
     yBox3 = GetTruckBoxYMovement(tTimer) * 4;
     SetObjectEventSpritePosByLocalIdAndMap(LOCALID_TRUCK_BOX_BOTTOM_R, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, BOX3_X_OFFSET - cameraXpan, BOX3_Y_OFFSET + yBox3);
 
-    // Arbitrary timer limit that won't be reached
     if (++tTimer == 30000)
         tTimer = 0;
 
     cameraYpan = GetTruckCameraBobbingY(tTimer);
     SetCameraPanning(cameraXpan, cameraYpan);
+#endif
 }
-
 #undef tTimer
 
 #define tTimerHorizontal data[0]
@@ -188,6 +196,11 @@ static void Task_Truck3(u8 taskId)
 
 static void Task_HandleTruckSequence(u8 taskId)
 {
+#if SKIP_INTRO_SEQUENCE == TRUE
+    UnlockPlayerFieldControls(); // Nos aseguramos de que el jugador pueda moverse
+    DestroyTask(taskId);         // Matamos la secuencia de inmediato
+    return;
+#else
    s16 *data = gTasks[taskId].data;
 
     switch (tState)
@@ -255,10 +268,15 @@ static void Task_HandleTruckSequence(u8 taskId)
         }
         break;
     }
+#endif
 }
 
 void ExecuteTruckSequence(void)
 {
+#if SKIP_INTRO_SEQUENCE == TRUE
+    // No bloqueamos controles ni creamos la tarea del camión
+    return; 
+#else
     MapGridSetMetatileIdAt(4 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_InsideOfTruck_DoorClosedFloor_Top);
     MapGridSetMetatileIdAt(4 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_InsideOfTruck_DoorClosedFloor_Mid);
     MapGridSetMetatileIdAt(4 + MAP_OFFSET, 3 + MAP_OFFSET, METATILE_InsideOfTruck_DoorClosedFloor_Bottom);
@@ -266,6 +284,7 @@ void ExecuteTruckSequence(void)
     LockPlayerFieldControls();
     CpuFastFill(0, gPlttBufferFaded, PLTT_SIZE);
     CreateTask(Task_HandleTruckSequence, 0xA);
+#endif
 }
 
 void EndTruckSequence(u8 taskId)

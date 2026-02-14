@@ -49,6 +49,8 @@
 #include "difficulty.h"
 #include "follower_npc.h"
 
+#include "config/pbh.h"
+
 extern const u8 EventScript_ResetAllMapFlags[];
 
 static void ClearFrontierRecord(void);
@@ -130,8 +132,20 @@ static void ClearFrontierRecord(void)
 
 static void WarpToTruck(void)
 {
-    SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
-    WarpIntoMap();
+    #if SKIP_INTRO_SEQUENCE == TRUE
+        // ESTO ES LO QUE TE FALTA: Limpia las banderas de warp especial
+        // Evita que el juego intente hacer el efecto de deslizar la pantalla
+        gSaveBlock2Ptr->specialSaveWarpFlags = 0; 
+
+        SetWarpDestination(MAP_GROUP(MAP_PRADO_NATAL), MAP_NUM(MAP_PRADO_NATAL), WARP_ID_NONE, 7, 12);
+        WarpIntoMap();
+        
+        // Marcamos la intro como terminada (Valor 4 o superior)
+        VarSet(VAR_LITTLEROOT_INTRO_STATE, 4); 
+    #else
+        SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), -1, -1, -1);
+        WarpIntoMap();
+    #endif
 }
 
 void Sav2_ClearSetDefault(void)
@@ -195,7 +209,7 @@ void NewGameInitData(void)
     SetMauvilleOldMan();
     InitDewfordTrend();
     ResetFanClub();
-    ResetLotteryCorner();
+    ResetLotteryCorner(); 
     WarpToTruck();
     RunScriptImmediately(EventScript_ResetAllMapFlags);
     ResetMiniGamesRecords();

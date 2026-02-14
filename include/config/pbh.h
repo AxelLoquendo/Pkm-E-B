@@ -9,5 +9,6 @@
 #define PBH_ICONOS_TIPOS_BATALLA            TRUE    // Si está habilitado, se mostrará el icono de tipo en batalla en vez de Tipo/..., el icono de categoría y la efectividad.
 
 #define OW_TILESET_ANIMATIONS  FALSE  // Cambia a TRUE cuando quieras ver las animaciones
+#define SKIP_INTRO_SEQUENCE    TRUE  // Si es TRUE, el juego salta del Copyright al Título.
 
 #endif // GUARD_CONFIG_PBH_H
