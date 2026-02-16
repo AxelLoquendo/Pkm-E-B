@@ -36,6 +36,11 @@ enum {
 #define VERSION_BANNER_Y_GOAL 68
 #define START_BANNER_X 128
 
+#define LOGO_PBH_TILEOFFSET_1 0
+#define LOGO_PBH_TILEOFFSET_2 64
+#define LOGO_PBH_TILEOFFSET_3 128
+#define LOGO_PBH_TILEOFFSET_4 192
+
 #define CLEAR_SAVE_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON | DPAD_UP)
 #define RESET_RTC_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON | DPAD_LEFT)
 #define BERRY_UPDATE_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON)
@@ -180,14 +185,86 @@ static const struct SpriteTemplate sVersionBannerRightSpriteTemplate =
     .callback = SpriteCB_VersionBannerRight,
 };
 
-static const struct CompressedSpriteSheet sSpriteSheet_EmeraldVersion[] =
+static const struct OamData sLogoPBHOamData =
 {
-    {
-        .data = gTitleScreenEmeraldVersionGfx,
-        .size = 0x1000,
-        .tag = TAG_VERSION
-    },
-    {},
+    .bpp = ST_OAM_8BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .size = SPRITE_SIZE(64x32),
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+static const union AnimCmd sLogoPBHAnim1[] = { ANIMCMD_FRAME(LOGO_PBH_TILEOFFSET_1, 0), ANIMCMD_END };
+static const union AnimCmd sLogoPBHAnim2[] = { ANIMCMD_FRAME(LOGO_PBH_TILEOFFSET_2, 0), ANIMCMD_END };
+static const union AnimCmd sLogoPBHAnim3[] = { ANIMCMD_FRAME(LOGO_PBH_TILEOFFSET_3, 0), ANIMCMD_END };
+static const union AnimCmd sLogoPBHAnim4[] = { ANIMCMD_FRAME(LOGO_PBH_TILEOFFSET_4, 0), ANIMCMD_END };
+
+static const union AnimCmd *const sLogoPBHAnimTable1[] =
+{
+    sLogoPBHAnim1,
+};
+static const union AnimCmd *const sLogoPBHAnimTable2[] =
+{
+    sLogoPBHAnim2,
+};
+static const union AnimCmd *const sLogoPBHAnimTable3[] =
+{
+    sLogoPBHAnim3,
+};
+static const union AnimCmd *const sLogoPBHAnimTable4[] =
+{
+    sLogoPBHAnim4,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_LogoPBH =
+{
+    .data = gTitleScreenEmeraldVersionGfx,
+    .size = 256 * 32, // En 8bpp, no se divide entre 2
+    .tag = TAG_VERSION
+};
+
+static const struct SpriteTemplate sLogoPBHSpriteTemplate1 =
+{
+    .tileTag = TAG_VERSION,
+    .paletteTag = TAG_VERSION,
+    .oam = &sLogoPBHOamData,
+    .anims = sLogoPBHAnimTable1,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sLogoPBHSpriteTemplate2 =
+{
+    .tileTag = TAG_VERSION,
+    .paletteTag = TAG_VERSION,
+    .oam = &sLogoPBHOamData,
+    .anims = sLogoPBHAnimTable2,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sLogoPBHSpriteTemplate3 =
+{
+    .tileTag = TAG_VERSION,
+    .paletteTag = TAG_VERSION,
+    .oam = &sLogoPBHOamData,
+    .anims = sLogoPBHAnimTable3,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct SpriteTemplate sLogoPBHSpriteTemplate4 =
+{
+    .tileTag = TAG_VERSION,
+    .paletteTag = TAG_VERSION,
+    .oam = &sLogoPBHOamData,
+    .anims = sLogoPBHAnimTable4,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
 };
 
 static const struct OamData sOamData_CopyrightBanner =
@@ -594,20 +671,21 @@ void CB2_InitTitleScreen(void)
     case 1:
         // bg2
         DecompressDataWithHeaderVram(gTitleScreenPokemonLogoGfx, (void *)(BG_CHAR_ADDR(0)));
-        DecompressDataWithHeaderVram(gTitleScreenPokemonLogoTilemap, (void *)(BG_SCREEN_ADDR(9)));
-        LoadPalette(gTitleScreenBgPalettes, BG_PLTT_ID(0), 15 * PLTT_SIZE_4BPP);
+        DecompressDataWithHeaderVram(gTitleScreenPokemonLogoTilemap, (void *)(VRAM + 0xA000));
+        LoadPalette(gTitleScreenBgPalettes, 0, 0x1E0);
         // bg3
-        DecompressDataWithHeaderVram(sTitleScreenRayquazaGfx, (void *)(BG_CHAR_ADDR(2)));
-        DecompressDataWithHeaderVram(sTitleScreenRayquazaTilemap, (void *)(BG_SCREEN_ADDR(26)));
+        //DecompressDataWithHeaderVram(sTitleScreenRayquazaGfx, (void *)(BG_CHAR_ADDR(2)));
+        //DecompressDataWithHeaderVram(sTitleScreenRayquazaTilemap, (void *)(BG_SCREEN_ADDR(26)));
         // bg1
-        DecompressDataWithHeaderVram(sTitleScreenCloudsGfx, (void *)(BG_CHAR_ADDR(3)));
-        DecompressDataWithHeaderVram(gTitleScreenCloudsTilemap, (void *)(BG_SCREEN_ADDR(27)));
+        //DecompressDataWithHeaderVram(sTitleScreenCloudsGfx, (void *)(BG_CHAR_ADDR(3)));
+        //DecompressDataWithHeaderVram(gTitleScreenCloudsTilemap, (void *)(BG_SCREEN_ADDR(27)));
         ScanlineEffect_Stop(); // Aquí se para el efecto de scanline
         ResetTasks();
         ResetSpriteData();
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 9;
-        LoadCompressedSpriteSheet(&sSpriteSheet_EmeraldVersion[0]);
+        //LoadCompressedSpriteSheet(&sSpriteSheet_EmeraldVersion[0]);
+        LoadCompressedSpriteSheet(&sSpriteSheet_LogoPBH);
         LoadCompressedSpriteSheet(&sSpriteSheet_PressStart[0]);
         LoadCompressedSpriteSheet(&sPokemonLogoShineSpriteSheet[0]);
         LoadPalette(gTitleScreenEmeraldVersionPal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
@@ -647,9 +725,9 @@ void CB2_InitTitleScreen(void)
         SetGpuReg(REG_OFFSET_BLDY, 12);
         SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(2) | BGCNT_SCREENBASE(26) | BGCNT_16COLOR | BGCNT_TXT256x256);
         SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(27) | BGCNT_16COLOR | BGCNT_TXT256x256);
-        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(9) | BGCNT_256COLOR | BGCNT_AFF256x256);
+        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(20) | BGCNT_256COLOR | BGCNT_AFF256x256);
         EnableInterrupts(INTR_FLAG_VBLANK);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
                                     | DISPCNT_OBJ_1D_MAP
                                     | DISPCNT_BG2_ON
                                     | DISPCNT_OBJ_ON
@@ -703,14 +781,14 @@ static void Task_TitleScreenPhase1(u8 taskId)
     {
         u8 spriteId;
 
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG2_ON | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG2_ON | DISPCNT_OBJ_ON);
         SetGpuReg(REG_OFFSET_WININ, 0);
         SetGpuReg(REG_OFFSET_WINOUT, 0);
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_OBJ | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
         SetGpuReg(REG_OFFSET_BLDY, 0);
 
-        // Create left side of version banner
+        /*// Create left side of version banner
         spriteId = CreateSprite(&sVersionBannerLeftSpriteTemplate, VERSION_BANNER_LEFT_X, VERSION_BANNER_Y, 0);
         gSprites[spriteId].sAlphaBlendIdx = ARRAY_COUNT(gTitleScreenAlphaBlend);
         gSprites[spriteId].sParentTaskId = taskId;
@@ -718,6 +796,12 @@ static void Task_TitleScreenPhase1(u8 taskId)
         // Create right side of version banner
         spriteId = CreateSprite(&sVersionBannerRightSpriteTemplate, VERSION_BANNER_RIGHT_X, VERSION_BANNER_Y, 0);
         gSprites[spriteId].sParentTaskId = taskId;
+        */
+
+        CreateSprite(&sLogoPBHSpriteTemplate1, 42, 75, 0);
+        CreateSprite(&sLogoPBHSpriteTemplate2, 42 + 64, 75, 0);
+        CreateSprite(&sLogoPBHSpriteTemplate3, 42 + 128, 75, 0);
+        CreateSprite(&sLogoPBHSpriteTemplate4, 42 + 192, 75, 0);
 
         gTasks[taskId].tCounter = 144;
         gTasks[taskId].func = Task_TitleScreenPhase2;
@@ -749,7 +833,7 @@ static void Task_TitleScreenPhase2(u8 taskId)
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BD);
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(6, 15));
         SetGpuReg(REG_OFFSET_BLDY, 0);
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0
                                     | DISPCNT_OBJ_1D_MAP
                                     | DISPCNT_BG0_ON
                                     | DISPCNT_BG1_ON
