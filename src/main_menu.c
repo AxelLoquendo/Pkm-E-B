@@ -39,6 +39,9 @@
 #include "window.h"
 #include "mystery_gift_menu.h"
 
+#include "ui_main_menu.h"
+#include "main_menu.h"
+
 /*
  * Main menu state machine
  * -----------------------
@@ -592,16 +595,18 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu)
     DmaFill16(3, 0, (void *)(PLTT + 2), PLTT_SIZE - 2);
 
     ResetPaletteFade();
-    LoadPalette(sMainMenuBgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    //LoadPalette(sMainMenuBgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
     LoadPalette(sMainMenuTextPal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     ScanlineEffect_Stop();
     ResetTasks();
     ResetSpriteData();
     FreeAllSpritePalettes();
+    /*
     if (returningFromOptionsMenu)
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK); // fade to black
     else
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_WHITEALPHA); // fade to white
+    */
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, sMainMenuBgTemplates, ARRAY_COUNT(sMainMenuBgTemplates));
     ChangeBgX(0, 0, BG_COORD_SET);
@@ -759,6 +764,9 @@ static void Task_DisplayMainMenu(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     u16 palette;
+
+    gTasks[taskId].func = Task_OpenMainMenu;
+    return;
 
     if (!gPaletteFade.active)
     {
@@ -1323,16 +1331,120 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     ResetSpriteData();
     FreeAllSpritePalettes();
     ResetAllPicSprites();
+
+    // 1. Creamos los objetos una sola vez
     AddBirchSpeechObjects(taskId);
-    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+
+    // 2. Cargamos el marco y las ventanas (para que no salga el cuadro blanco)
+    InitWindows(sNewGameBirchSpeechTextWindows);
+    LoadMainMenuWindowFrameTiles(0, 0xF3);
+    LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+    NewGameBirchSpeech_ShowDialogueWindow(0, TRUE);
+
+    // 3. Configuración de posición y visibilidad inicial
+    gSprites[gTasks[taskId].tBrendanSpriteId].x = 180; 
+    gSprites[gTasks[taskId].tBrendanSpriteId].y = 60;
+    gSprites[gTasks[taskId].tBrendanSpriteId].invisible = FALSE;
+    
+    gSprites[gTasks[taskId].tMaySpriteId].invisible = TRUE;
+    gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
+    gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
+
+    // 4. Asignamos variables de la tarea
+    gTasks[taskId].tPlayerSpriteId = gTasks[taskId].tBrendanSpriteId;
+    gTasks[taskId].tPlayerGender = MALE;
     gTasks[taskId].tBG1HOFS = 0;
-    gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowBirch;
-    gTasks[taskId].tPlayerSpriteId = SPRITE_NONE;
     gTasks[taskId].data[3] = 0xFF;
-    gTasks[taskId].tTimer = 0xD8;
+    gTasks[taskId].tTimer = 30; // Reducido para que empiece rápido
+
+    // 5. Iniciamos música y fondos
     PlayBGM(MUS_ROUTE122);
     ShowBg(0);
     ShowBg(1);
+    
+    // 6. Fundido de entrada y saltar a la elección de género
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
+}
+
+void CB2_NewGameBirchSpeech_FromNewMainMenu(void)
+{
+    u8 taskId;
+
+    // 1. Limpieza absoluta
+    ResetBgsAndClearDma3BusyFlags(0);
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    
+    // IMPORTANTE: Detenemos cualquier proceso del menú anterior
+    ResetTasks();
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetAllPicSprites();
+
+    // 2. Configuración de Fondos (BGs)
+    // Usamos la plantilla de Birch pero reseteamos los buffers
+    InitBgFromTemplate(&sBirchBgTemplate);
+    
+    DmaFill16(3, 0, VRAM, VRAM_SIZE);
+    DmaFill32(3, 0, OAM, OAM_SIZE);
+    DmaFill16(3, 0, PLTT, PLTT_SIZE);
+    ResetPaletteFade();
+
+    // 3. CARGA DE GRÁFICOS (Tiles + Mapas + Paletas)
+    // Esto carga la plataforma y el fondo
+    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (void *)VRAM);
+    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (void *)(BG_SCREEN_ADDR(7)));
+    
+    LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+
+    // 4. EL MARCO DE TEXTO (Para que no salga sin bordes)
+    InitWindows(sNewGameBirchSpeechTextWindows);
+    // Cargamos los tiles del marco en la memoria
+    LoadMainMenuWindowFrameTiles(0, 0xF3);
+    LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+    
+    // Pintamos el marco ANTES de empezar
+    NewGameBirchSpeech_ShowDialogueWindow(0, TRUE); 
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_FULL);
+
+    // 5. Crear la Tarea (La que tomará el control)
+    taskId = CreateTask(Task_NewGameBirchSpeech_BoyOrGirl, 0); 
+
+    // 6. Configurar Sprites (Asegura que el ID sea el correcto)
+    AddBirchSpeechObjects(taskId);
+    
+    // Forzamos visibilidad y posición
+    gSprites[gTasks[taskId].tBrendanSpriteId].x = 180; 
+    gSprites[gTasks[taskId].tBrendanSpriteId].y = 60;
+    gSprites[gTasks[taskId].tBrendanSpriteId].invisible = FALSE;
+    gSprites[gTasks[taskId].tMaySpriteId].invisible = TRUE;
+    gSprites[gTasks[taskId].tBirchSpriteId].invisible = TRUE;
+    gSprites[gTasks[taskId].tLotadSpriteId].invisible = TRUE;
+
+    // 7. Variables de control
+    gTasks[taskId].tPlayerSpriteId = gTasks[taskId].tBrendanSpriteId;
+    gTasks[taskId].tPlayerGender = MALE;
+    gTasks[taskId].tTimer = 30;
+
+    // 8. "Encender" la pantalla
+    PlayBGM(MUS_ROUTE122);
+    
+    // Registros de video para mostrar BGs y Sprites
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
+    
+    ShowBg(0);
+    ShowBg(1);
+
+    // 9. Callbacks (Tus definiciones)
+    // Al usar CB2_MainMenu, asegúrate de que NO haya otra tarea 
+    // del menú principal corriendo (por eso hicimos ResetTasks arriba)
+    SetVBlankCallback(VBlankCB_MainMenu);
+    SetMainCallback2(CB2_MainMenu);
+
+    // Forzamos el fundido desde negro
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
 }
 
 static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
@@ -1350,9 +1462,9 @@ static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
         gSprites[spriteId].y = 60;
         gSprites[spriteId].invisible = FALSE;
         gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
-        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 10);
-        NewGameBirchSpeech_StartFadePlatformOut(taskId, 20);
-        gTasks[taskId].tTimer = 80;
+        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 0);
+        NewGameBirchSpeech_StartFadePlatformOut(taskId, 0);
+        gTasks[taskId].tTimer = 0;
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome;
     }
 }
@@ -1526,6 +1638,10 @@ static void Task_NewGameBirchSpeech_BoyOrGirl(u8 taskId)
     NewGameBirchSpeech_ClearWindow(0);
     StringExpandPlaceholders(gStringVar4, gText_Birch_BoyOrGirl);
     AddTextPrinterForMessage(TRUE);
+
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_FULL);
+
     gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowGenderMenu;
 }
 
@@ -1801,30 +1917,27 @@ static void Task_NewGameBirchSpeech_WaitForPlayerShrink(u8 taskId)
 
 static void Task_NewGameBirchSpeech_FadePlayerToWhite(u8 taskId)
 {
-    u8 spriteId;
-
-    if (!gPaletteFade.active)
-    {
-        spriteId = gTasks[taskId].tPlayerSpriteId;
-        gSprites[spriteId].callback = SpriteCB_Null;
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-        BeginNormalPaletteFade(PALETTES_OBJECTS, 0, 0, 16, RGB_WHITEALPHA);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_Cleanup;
-    }
+    // Forzamos el paso al Cleanup sin esperar a que termine el fade actual
+    // ya que el Cleanup hará un ResetPaletteFade()
+    gTasks[taskId].func = Task_NewGameBirchSpeech_Cleanup;
 }
 
 static void Task_NewGameBirchSpeech_Cleanup(u8 taskId)
 {
-    if (!gPaletteFade.active)
-    {
-        FreeAllWindowBuffers();
-        FreeAndDestroyMonPicSprite(gTasks[taskId].tLotadSpriteId);
-        ResetAllPicSprites();
-        SetMainCallback2(CB2_NewGame);
-        DestroyTask(taskId);
-    }
-}
+    // 1. Limpieza total de gráficos y ventanas inmediatamente
+    FreeAllWindowBuffers();
+    FreeAndDestroyMonPicSprite(gTasks[taskId].tLotadSpriteId);
+    ResetAllPicSprites();
+    
+    // 2. Detener cualquier proceso de paletas pendiente
+    ResetPaletteFade(); 
 
+    // 3. Saltar al mapa definido en new_game.c
+    SetMainCallback2(CB2_NewGame); 
+    
+    // 4. Eliminar esta tarea para que no se ejecute el próximo frame
+    DestroyTask(taskId);
+}
 static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
 {
     u8 taskId;
@@ -2315,10 +2428,17 @@ static void NewGameBirchSpeech_CreateDialogueWindowBorder(u8 bg, u8 x, u8 y, u8 
 
 static void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId)
 {
-    if (gTasks[taskId].tTimer-- <= 0)
+    // Simplemente esperamos a que el timer termine (son solo 5 frames)
+    if (gTasks[taskId].tTimer)
     {
-        NewGameBirchSpeech_ShowDialogueWindow(0, TRUE);
-        gTasks[taskId].func = Task_NewGameBirchSpeech_SoItsPlayerName;
+        gTasks[taskId].tTimer--;
+    }
+    else
+    {
+        // En lugar de cargar ventanas y texto de Birch...
+        FreeAllWindowBuffers();
+        SetMainCallback2(CB2_NewGame); // <--- ESTO TE LLEVA A TU MAPA DEFINIDO
+        DestroyTask(taskId);
     }
 }
 
