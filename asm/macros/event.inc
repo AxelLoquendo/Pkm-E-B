@@ -2713,3 +2713,25 @@
 	callnative ScrCmd_istmrelearneractive, requests_effects=1
 	.4byte \destination
 	.endm
+
+	@ Mugshots
+	MUGSHOT_KAEL_NORMAL = 0
+	MUGSHOT_KAEL_HAPPY = 1
+	MUGSHOT_KAEL_SAD = 2
+	MUGSHOT_KAEL_ANGRY = 3
+	MUGSHOT_KAIDA_NORMAL = 4
+	MUGSHOT_KAIDA_HAPPY = 5
+	MUGSHOT_KAIDA_SAD = 6
+	MUGSHOT_KAIDA_ANGRY = 7
+	.endm
+
+	@ Muestra un mugshot basado en el ID proporcionado.
+	.macro showmugshot mugshotId:req
+	.byte 0xe6
+	.2byte \mugshotId
+	.endm
+
+	@ Elimina cualquier mugshot de la pantalla.
+	.macro hidemugshot
+	.byte 0xe7
+	.endm

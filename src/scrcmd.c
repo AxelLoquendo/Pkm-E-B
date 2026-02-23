@@ -62,6 +62,9 @@
 #include "constants/event_objects.h"
 #include "constants/map_types.h"
 
+//mugshot
+#include "constants/mugshots.h"
+
 typedef u16 (*SpecialFunc)(void);
 typedef void (*NativeFunc)(struct ScriptContext *ctx);
 
@@ -3264,5 +3267,18 @@ bool8 ScrCmd_istmrelearneractive(struct ScriptContext *ctx)
      && (P_ENABLE_ALL_TM_MOVES || IsBagPocketNonEmpty(POCKET_TM_HM)))
         ScriptCall(ctx, ptr);
 
+    return FALSE;
+}
+
+bool8 ScrCmd_showmugshot(struct ScriptContext *ctx)
+{
+    u16 mugshotId = VarGet(ScriptReadHalfword(ctx)); // Aquí nace el ID
+    DrawMugshotByID(mugshotId); // Aquí se lo "enviamos" a la otra función
+    return FALSE;
+}
+
+bool8 ScrCmd_hidemugshot(struct ScriptContext *ctx)
+{
+    ClearMugshot(); // Llama a la función de tu mugshot.c
     return FALSE;
 }

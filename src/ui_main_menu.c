@@ -829,7 +829,7 @@ static void DestroyMonIcons()
 //  Print The Text For Dex Num, Badges, Name, Playtime, Location
 //
 static const u8 sText_DexNum[] = _("Dex {STR_VAR_1}");
-static const u8 sText_Badges[] = _("Badges {STR_VAR_1}");
+static const u8 sText_Badges[] = _("Medallas {STR_VAR_1}");
 static void PrintToWindow(u8 windowId, u8 colorIdx)
 {
     const u8 colors[3] = {0,  2,  3}; 
