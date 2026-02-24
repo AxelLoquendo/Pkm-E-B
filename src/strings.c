@@ -974,6 +974,7 @@ const u8 gText_MenuExit[] = _("Salir");
 const u8 gText_MenuRetire[] = _("Retirada");
 const u8 gText_MenuRest[] = _("Descanso");
 const u8 gText_MenuDexNav[] = _("Dexnav");
+//const u8 gText_MenuCoopMode[] = _("Co-op");
 const u8 gText_SafariBallStock[] = _("Safari Balls\nTienes {STR_VAR_1}.");
 const u8 gText_BattlePyramidFloor[] = _("Pirámide\n{STR_VAR_1}");
 const u8 gText_Floor1[] = _("Nivel 1");

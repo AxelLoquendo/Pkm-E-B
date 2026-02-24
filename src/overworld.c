@@ -78,6 +78,8 @@
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
 
+#include "constants/multijugador.h"
+
 STATIC_ASSERT((B_FLAG_FOLLOWERS_DISABLED == 0 || OW_FOLLOWERS_ENABLED), FollowersFlagAssignedWithoutEnablingThem);
 
 struct CableClubPlayer
@@ -1730,6 +1732,9 @@ void CB2_Overworld(void)
     bool32 fading = (gPaletteFade.active != 0);
     if (fading)
         SetVBlankCallback(NULL);
+    
+    UpdateGhostMultiplayer();
+        
     OverworldBasic();
     if (fading)
     {

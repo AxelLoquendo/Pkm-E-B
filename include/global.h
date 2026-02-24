@@ -23,6 +23,10 @@
 #include "constants/items.h"
 #include "config/save.h"
 
+//coop mode
+extern bool8 gCoopModeActive;
+
+
 // Prevent cross-jump optimization.
 #define BLOCK_CROSS_JUMP asm("");
 
