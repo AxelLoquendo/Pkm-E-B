@@ -17,4 +17,5 @@ struct GhostPacket
 void ToggleGhostMultiplayer(void);
 void UpdateGhostMultiplayer(void);
 
+
 #endif // GUARD_CONSTANTS_MULTIJUGADOR_H
