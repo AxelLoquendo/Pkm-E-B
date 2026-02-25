@@ -427,3 +427,7 @@ const u32 gFieldEffectObjectPic_CaveDust[] = INCBIN_U32("graphics/field_effects/
 const u16 gFieldEffectObjectPalette_CaveDust[] = INCBIN_U16("graphics/field_effects/palettes/cave_dust.gbapal");
 
 const u32 gObjectEventPic_ApricornTree[] = INCBIN_U32("graphics/object_events/pics/misc/apricorn_tree.4bpp");
+
+// Paletas y Overworlds Pokemon Eternal Bond
+const u16 gObjectEventPal_Kael[] = INCBIN_U16("graphics/object_events/palettes/kael.gbapal");
+const u16 gObjectEventPal_Kaida[] = INCBIN_U16("graphics/object_events/palettes/kaida.gbapal");
