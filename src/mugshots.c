@@ -42,64 +42,64 @@ static const u16 sPal_Kaida_Angry[] = INCBIN_U16("graphics/mugshots/kaida_angry.
 // ========= TABLA DE DATOS =========
 static const struct Mugshot sMugshots[] = {
     [MUGSHOT_KAEL_NORMAL] = {
-        .x = 16,
-        .y = 5,
+        .x = 1,
+        .y = 6,
         .width = 64,
         .height = 64,
         .image = sImg_Kael_Normal,
         .palette = sPal_Kael_Normal
     },
     [MUGSHOT_KAEL_HAPPY] = {
-        .x = 16,
-        .y = 5,
+        .x = 1,
+        .y = 6,
         .width = 64,
         .height = 64,
         .image = sImg_Kael_Happy,
         .palette = sPal_Kael_Happy
     },
     [MUGSHOT_KAEL_SAD] = {
-        .x = 16,
-        .y = 5,
+        .x = 1,
+        .y = 6,
         .width = 64,
         .height = 64,
         .image = sImg_Kael_Sad,
         .palette = sPal_Kael_Sad
     },
     [MUGSHOT_KAEL_ANGRY] = {
-        .x = 16,
-        .y = 5,
+        .x = 1,
+        .y = 6,
         .width = 64,
         .height = 64,
         .image = sImg_Kael_Angry,
         .palette = sPal_Kael_Angry
     },
     [MUGSHOT_KAIDA_NORMAL] = {
-        .x = 16,
-        .y = 5,
+        .x = 1,
+        .y = 6,
         .width = 64,
         .height = 64,
         .image = sImg_Kaida_Normal,
         .palette = sPal_Kaida_Normal
     },
     [MUGSHOT_KAIDA_HAPPY] = {
-        .x = 16,
-        .y = 5,
+        .x = 1,
+        .y = 6,
         .width = 64,
         .height = 64,
         .image = sImg_Kaida_Happy,
         .palette = sPal_Kaida_Happy
     },
     [MUGSHOT_KAIDA_SAD] = {
-        .x = 16,
-        .y = 5,
+        .x = 1,
+        .y = 6,
         .width = 64,
         .height = 64,
         .image = sImg_Kaida_Sad,
         .palette = sPal_Kaida_Sad
     },
     [MUGSHOT_KAIDA_ANGRY] = {
-        .x = 16,
-        .y = 5,
+        .x = 1,
+        .y = 6,
         .width = 64,
         .height = 64,
         .image = sImg_Kaida_Angry,
