@@ -310,7 +310,10 @@ $(BATTRANSGFXDIR)/vs_frame.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 16 -Wnum_tiles
 
 graphics/party_menu/bg.4bpp: %.4bpp: %.png
-	$(GFX) $< $@ -num_tiles 62 -Wnum_tiles
+	$(GFX) $< $@ -num_tiles 96 -Wnum_tiles
+
+graphics/party_menu/bgFemale.4bpp: %.4bpp: %.png
+	$(GFX) $< $@ -num_tiles 96 -Wnum_tiles
 
 $(TYPESGFXDIR)/move_types.4bpp: $(types:%=$(TYPESGFXDIR)/%.4bpp) $(contest_types:%=$(TYPESGFXDIR)/contest_%.4bpp)
 	@cat $^ >$@

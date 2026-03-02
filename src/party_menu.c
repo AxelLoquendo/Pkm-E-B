@@ -878,19 +878,30 @@ static bool8 AllocPartyMenuBgGfx(void)
     switch (sPartyMenuInternal->data[0])
     {
     case 0:
-        sPartyBgGfxTilemap = malloc_and_decompress(gPartyMenuBg_Gfx, &sizeout);
+        // Cambio de Gráficos (Tiles)
+        if (gSaveBlock2Ptr->playerGender == MALE)
+            sPartyBgGfxTilemap = malloc_and_decompress(gPartyMenuBg_Gfx, &sizeout);
+        else
+            sPartyBgGfxTilemap = malloc_and_decompress(gPartyMenuBgFemale_Gfx, &sizeout);
+            
         LoadBgTiles(1, sPartyBgGfxTilemap, sizeout, 0);
         sPartyMenuInternal->data[0]++;
         break;
     case 1:
         if (!IsDma3ManagerBusyWithBgCopy())
         {
+            // Usamos el mismo .bin para ambos casos
             DecompressDataWithHeaderWram(gPartyMenuBg_Tilemap, sPartyBgTilemapBuffer);
             sPartyMenuInternal->data[0]++;
         }
         break;
     case 2:
-        LoadPalette(gPartyMenuBg_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+        // Cambio de Paleta
+        if (gSaveBlock2Ptr->playerGender == MALE)
+            LoadPalette(gPartyMenuBg_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+        else
+            LoadPalette(gPartyMenuBgFemale_Pal, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+            
         CpuCopy16(gPlttBufferUnfaded, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
         sPartyMenuInternal->data[0]++;
         break;
