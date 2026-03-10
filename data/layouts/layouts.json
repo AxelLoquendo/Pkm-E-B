@@ -4090,6 +4090,16 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/PradoNatal/border.bin",
       "blockdata_filepath": "data/layouts/PradoNatal/map.bin"
+    },
+    {
+      "id": "LAYOUT_BLOQUE_NEGRO",
+      "name": "BloqueNegro_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/BloqueNegro/border.bin",
+      "blockdata_filepath": "data/layouts/BloqueNegro/map.bin"
     }
   ]
 }

@@ -1122,3 +1122,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/scripts/apricorn_tree.inc"
 
 	.include "data/maps/PradoNatal/scripts.inc"
+
+	.include "data/maps/BloqueNegro/scripts.inc"
