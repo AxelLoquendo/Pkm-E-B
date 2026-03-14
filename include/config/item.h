@@ -11,7 +11,7 @@
 #define I_BERRY_EV_JUMP                 GEN_LATEST  // Solo en Gen4, las Berries que reducen EV bajan el EV de una estadística a 100 si está por encima de 100.
 #define I_GRISEOUS_ORB_FORM_CHANGE      GEN_LATEST  // En Gen9+, el Griseous Orb ya no cambia la forma de Giratina cuando se sostiene.
 #define I_GEM_BOOST_POWER               GEN_LATEST  // En Gen6+, el aumento de poder del Gem se redujo del 50% al 30%.
-#define I_USE_EVO_HELD_ITEMS_FROM_BAG   FALSE       // Si está habilitado, objetos como Razor Claw o Electirizer serán utilizables desde la bolsa para evolucionar un Pokémon al igual que en LA.
+#define I_USE_EVO_HELD_ITEMS_FROM_BAG   TRUE       // Si está habilitado, objetos como Razor Claw o Electirizer serán utilizables desde la bolsa para evolucionar un Pokémon al igual que en LA.
 #define I_TYPE_BOOST_POWER              GEN_LATEST  // En Gen4+, todos los objetos que aumentan el poder de un tipo regular aumentaron su potencia del 10% al 20%. Ej. Charcoal
 #define I_SELL_VALUE_FRACTION           GEN_LATEST  // En Gen9+, los objetos se venden por 1/4 de su valor en lugar de 1/2.
 #define I_PRICE                         GEN_LATEST  // Algunos objetos han variado en valor a lo largo de las generaciones.

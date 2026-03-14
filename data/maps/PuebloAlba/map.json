@@ -1,0 +1,26 @@
+{
+  "id": "MAP_PUEBLO_ALBA",
+  "name": "PuebloAlba",
+  "layout": "LAYOUT_PUEBLO_ALBA",
+  "music": "MUS_LITTLEROOT_TEST",
+  "region_map_section": "MAPSEC_PUEBLO_ALBA",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_NONE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_PRADO_NATAL",
+      "offset": 0,
+      "direction": "left"
+    }
+  ],
+  "object_events": [],
+  "warp_events": [],
+  "coord_events": [],
+  "bg_events": []
+}

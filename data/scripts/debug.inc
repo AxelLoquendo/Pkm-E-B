@@ -162,6 +162,7 @@ Debug_EventScript_Script_2::
 	setflag FLAG_TERA_ORB_NO_COST
 	additem ITEM_DYNAMAX_BAND
 	additem ITEM_TERA_ORB
+	setflag FLAG_DEXNAV_GET
 	release
 	end
 

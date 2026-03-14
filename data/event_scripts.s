@@ -1124,3 +1124,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/PradoNatal/scripts.inc"
 
 	.include "data/maps/BloqueNegro/scripts.inc"
+
+	.include "data/maps/PuebloAlba/scripts.inc"

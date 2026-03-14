@@ -1238,6 +1238,14 @@
       "y": 4,
       "width": 1,
       "height": 1
+    },
+    {
+      "id": "MAPSEC_PUEBLO_ALBA",
+      "name": "Pueblo Alba",
+      "x": 7,
+      "y": 12,
+      "width": 2,
+      "height": 1
     }
   ]
 }

@@ -3560,7 +3560,7 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         .palette = gMonPalette_Flittle,
         .shinyPalette = gMonShinyPalette_Flittle,
         .iconSprite = gMonIcon_Flittle,
-        .iconPalIndex = 1,
+        .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 2, SHADOW_SIZE_S)
         FOOTPRINT(Flittle)
@@ -5527,7 +5527,7 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         .palette = gMonPalette_FlutterMane,
         .shinyPalette = gMonShinyPalette_FlutterMane,
         .iconSprite = gMonIcon_FlutterMane,
-        .iconPalIndex = 2,
+        .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-2, 20, SHADOW_SIZE_S)
         FOOTPRINT(FlutterMane)

@@ -14,7 +14,7 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_LITTLEROOT_TOWN",
+      "map": "MAP_PUEBLO_ALBA",
       "offset": 0,
       "direction": "right"
     }
