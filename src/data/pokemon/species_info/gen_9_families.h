@@ -7728,7 +7728,7 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         .palette = gMonPalette_GougingFire,
         .shinyPalette = gMonShinyPalette_GougingFire,
         .iconSprite = gMonIcon_GougingFire,
-        .iconPalIndex = 5,
+        .iconPalIndex = 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(-1, 6, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(GougingFire)
