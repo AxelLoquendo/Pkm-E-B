@@ -72,6 +72,9 @@
 #define B_UPDATED_CONVERSION_2      GEN_LATEST // En Gen5+, Conversión 2 cambia el tipo del usuario a un tipo que resista el último ataque del objetivo. Antes, lo hacía al último ataque recibido. Además, Forcejeo se consideraba tipo Normal antes de 5ª gen.
 #define B_PP_REDUCED_BY_SPITE       GEN_LATEST // En Gen4+, Spite reduce el PP del último movimiento del oponente en 4, en lugar de 2 a 5.
 #define B_EXTRAPOLATED_MOVE_FLAGS   TRUE       // Agrega flags de movimiento a movimientos que no tienen oficialmente pero que probablemente tendrían si estuvieran en el juego de la serie principal más reciente.
+#define B_HIDDEN_POWER_COUNTER      GEN_LATEST // Prior to Gen4, Counter and Mirror Coat treat Hidden Power as Physical regardless of type.
+#define B_MODERN_TRICK_CHOICE_LOCK  GEN_LATEST // In Gen5+, if a Choice Item is swapped for a Choice Item, the Trick/Switcheroo user can pick another move, and then they'll be locked into it.
+#define B_PROTECT_FAILURE_RATE      GEN_LATEST // In Gen5+, protect moves fails 1/3 of the time instead of 1/2
 
 // Configuración de datos de habilidades
 #define B_UPDATED_ABILITY_DATA      GEN_LATEST // Afecta las flags.
@@ -97,7 +100,7 @@
 #define B_CAN_SPITE_FAIL            GEN_LATEST // En Gen4+, Spite ya no puede fallar si el último movimiento del oponente solo tiene 1 PP restante.
 #define B_CRASH_IF_TARGET_IMMUNE    GEN_LATEST // En Gen4+, el usuario de Patada salto y Patada salto alta "seguirá adelante y chocará" si ataca a un objetivo que es inmune al movimiento.
 #define B_MEMENTO_FAIL              GEN_LATEST // En Gen4+, Memento falla si no hay objetivo o si el objetivo está protegido o detrás de un sustituto. Pero no si el Atk/Sp. Atk están en -6.
-#define B_PARTING_SHOT_SWITCH       GEN_LATEST // En Gen7+, el usuario no se retirar si Desarme (Parting Shot) falla al bajar las estadsticas del objetivo.
+#define B_PARTING_SHOT_SWITCH       GEN_LATEST // En Gen7+, el usuario no se retirar� si Desarme (Parting Shot) falla al bajar las estad�sticas del objetivo.
 #define B_BATON_PASS_TRAPPING       GEN_LATEST // In Gen5+, Baton Pass does not keep trapping effects on other battlers when the user switches out.
 
 #define B_GLARE_GHOST               GEN_LATEST // En Gen4+, Deslumbrar puede golpear a Pokémon de tipo Fantasma normalmente.
@@ -112,7 +115,7 @@
 #define B_TELEPORT_BEHAVIOR         GEN_LATEST // A partir de LGPE (Gen8+ aquí), Teleport permite al usuario intercambiarse con otro miembro del equipo.
 #define B_BEAT_UP                   GEN_LATEST // En Gen5+, Beat Up usa una fórmula diferente para calcular su daño y causa daño de tipo Sombra. Antes de Gen 5, cada golpe también anunciaba el nombre del miembro del equipo.
 #define B_DARK_VOID_FAIL            GEN_LATEST // En Gen7+, solo Darkrai puede usar Brecha negra.
-#define B_BURN_HIT_THAW             GEN_LATEST // En Gen6+, los movimientos dañinos con una posibilidad de quemadura descongelarán al objetivo, independientemente de si son movimientos de tipo Fuego o no.
+#define B_HIT_THAW                  GEN_LATEST // En Gen6+, los movimientos dañinos con una posibilidad de quemadura descongelarán al objetivo, independientemente de si son movimientos de tipo Fuego o no.
 #define B_HEALING_WISH_SWITCH       GEN_LATEST // En Gen5+, el Pokémon que recibe Healing Wish entra al final del turno.
                                                // Además, en gen8+ el efecto de Healing Wish se almacenará hasta que el usuario cambie a un Pokémon afectado por estado o herido.
 #define B_DEFOG_EFFECT_CLEARING     GEN_LATEST // En Gen6+, Despejar quita las trapas de los campos de ambos rivales. En Gen8+, Defog también quita los Campos activos.
@@ -132,10 +135,10 @@
 #define B_HEAL_BELL_SOUNDPROOF      GEN_LATEST // En Gen5, Heal Bell afecta a todos los Pokémon con Soundproof. En Gen6-8 afecta a Pokémon inactivos, pero no a los que están en batalla. En Gen9 siempre afecta al usuario.
 #define B_TAUNT_ME_FIRST            GEN_LATEST // In Gen5+, Taunt does not block Me First.
 #define B_CHARGE                    GEN_LATEST // En Gen8-, estado Cargado se pierde sea cuál sea el tipo del siguiente movimiento.
-#define B_POWDER_RAIN               GEN_LATEST // En Gen7+, Polvo explosivo no daña al atacante si está lloviendo.
 #define B_AFTER_YOU_TURN_ORDER      GEN_LATEST // En Gen8+, Cede paso no falla si el orden del turno no cambiaría después de usarse.
 #define B_QUASH_TURN_ORDER          GEN_LATEST // En Gen8+, los ataques se ven afectados por Último lugar según su velocidad. Antes de la 8 gen, los que eran afectados por este ataque se movían en el orden en que recibían el movimiento.
 #define B_DESTINY_BOND_FAIL         GEN_LATEST // En Gen7+, Mismodestino falla si lo usas repetidamente.
+#define B_POWDER_STATUS_HEAVY_RAIN  GEN_LATEST // In Gen7+, Powder doesn't damage the user of a Fire type move in heavy rain.
 #define B_FORESIGHT_FAIL            GEN_LATEST // In Gen2 and Gen5+, Foresight fails if used against a target already under its effect.
 #define B_MIRACLE_EYE_FAIL          GEN_LATEST // In Gen5+, Miracle Eye fails if used against a target already under its effect.
 #define B_PURSUIT_TARGET            GEN_LATEST // En Gen4+, Persecución ataca al Pokémon que está cambiando aunque no fuera el objetivo original. En generaciones anteriores, Persecución solo ataca al Pokémon que cambia si era el objetivo del movimiento.
@@ -145,6 +148,16 @@
                                                // If OW_TIMES_OF_DAY is set to Gen 3, then Morning Sun is boosted during the day.
 #define B_DREAM_EATER_LIQUID_OOZE   GEN_LATEST // In Gen5+, Dream Eater is affected by Liquid Ooze.
 #define B_DREAM_EATER_SUBSTITUTE    GEN_LATEST // In Gen5+, Dream Eater can successfully hit and drain from a Substitute.
+#define B_SNATCH                    GEN_LATEST // In Gen5+, Snatch no longer steals moves that were already stolen by another Pokémon's Snatch on the same turn.
+#define B_FOCUS_PUNCH_FAILURE       GEN_LATEST // To determine if Focus is lost, in Gen4-, check if the current move is Focus Punch.
+                                               // In Gens 5-6, check if the selected move is Focus Punch.
+                                               // In Gen7+, check if the current move and the selected move are Focus Punch.
+                                               // Also in Gen4-, the check for Focus Punch fail will occur after effects like pp consumption and flinching while it happens before in Gen5+
+#define B_COUNTER_MIRROR_COAT_ALLY  GEN_LATEST // In Gen5+, an ally's attack does not count for uses of Counter/Mirror Coat/Metal Burst. In Gen4-, if the last attack taken was from an ally, Counter/Mirror Coat/Metal Burst would fail.
+#define B_COUNTER_TRY_HIT_PARTNER   GEN_LATEST // In Gen5+, if the user of the last attack is not on the field, it will be redirected to the partner. In Gen4-, Counter/Mirror Coat/Metal Burst would fail.
+#define B_RAGE_BUILDS               GEN_LATEST // In Gen4+, Rage's effect only sets in when it successfully hits. In Gen3, Rage's effect sets in regardless of whether it hits, misses or fails.
+#define B_CHECK_USER_FAILURE        GEN_LATEST // In Gen5+, The user no longer checks it's own failure, e.g. Soundproof will not block it's own Perish Song
+#define B_ABSORB_MESSAGE            GEN_LATEST // In Gen5+, No absorb message is played if user is already at full hp.
 
 // Configuración de habilidades
 #define B_GALE_WINGS                GEN_LATEST // En Gen7+ requiere HP completo para activarse.
@@ -159,9 +172,8 @@
 #define B_PLUS_MINUS_INTERACTION    GEN_LATEST // En Gen5+, Plus y Minus pueden activarse con ellos mismos y con la habilidad opuesta. Antes, solo la habilidad opuesta podía activarlo.
 #define B_WEATHER_FORMS             GEN_LATEST // En Gen5+, Castform y Cherrim vuelven a su forma base al perder su habilidad respectiva. Cherrim necesita Flower Gift para cambiar de forma.
 #define B_SYMBIOSIS_GEMS            GEN_LATEST // En Gen7+, Symbiosis pasa un objeto después de un ataque potenciado por gema. Anteriormente, los objetos se pasaban antes de que el ataque potenciado por gema golpeara, haciendo que el efecto del objeto se aplicara.
-#define B_ABSORBING_ABILITY_STRING  GEN_LATEST // En Gen5+, las habilidades que absorben movimientos de un tipo específico usan una cadena genérica para aumentos y disminuciones de estadísticas.
 #define B_REDIRECT_ABILITY_IMMUNITY GEN_LATEST // En Gen5+, Pokémon con Lightning Rod/Storm Drain se vuelven inmunes a movimientos de tipo Eléctrico/Agua y aumentan su Sp. Atk en 1 etapa además del efecto de redirección.
-#define B_REDIRECT_ABILITY_ALLIES   GEN_LATEST // En Gen4+, Pararrayos/Colector tambi�n redirigen los movimientos de los aliados.
+#define B_REDIRECT_ABILITY_ALLIES   GEN_LATEST // En Gen4+, Pararrayos/Colector también redirigen los movimientos de los aliados.
 #define B_LEAF_GUARD_PREVENTS_REST  GEN_LATEST // En Gen5+, Leaf Guard previene el uso de Rest en luz solar intensa.
 #define B_TRANSISTOR_BOOST          GEN_LATEST // En Gen9+, Transistor solo aumentará los movimientos de tipo Eléctrico en 1.3x en lugar de 1.5x.
 #define B_ILLUMINATE_EFFECT         GEN_LATEST // En Gen9+, Illuminate previene reducciones de precisión e ignora la evasión del objetivo.
@@ -180,6 +192,25 @@
 #define B_DEFIANT_STICKY_WEB        GEN_LATEST // In Gen9+, Defiant activates on Sticky Web regardless of who set it up. In Gen8, Defiant does not activate on Sticky Web set up by an ally after Court Change swaps its side.
 #define B_POWDER_OVERCOAT           GEN_LATEST // In Gen6+, Overcoat blocks powder and spore moves from affecting the user.
 #define B_INFILTRATOR_SUBSTITUTE    GEN_LATEST // In Gen6+, Infiltrator bypasses Substitute when using a move, excluding Transform and Sky Drop.
+
+// Various volatile timers
+#define B_CONFUSION_TURNS    5
+#define B_UPROAR_TURN_COUNT  5
+#define B_RAMPAGE_TURNS      3
+#define B_DISABLE_TIMER      4
+#define B_ENCORE_TIMER       4
+#define B_PERISH_SONG_TIMER  3
+#define B_TAUNT_TIMER        5
+#define B_SLOW_START_TIMER   5
+#define B_EMBARGO_TIMER      5
+#define B_MAGNET_RISE_TIMER  5
+#define B_TELEKINESIS_TIMER  3
+#define B_HEAL_BLOCK_TIMER   5
+#define B_LASER_FOCUS_TIMER  2
+#define B_THROAT_CHOP_TIMER  2
+#define B_WRAP_TURNS         7 // Max number of turns with Grip Claw
+#define B_SYRUP_BOMB_TIMER   3
+#define B_TORMENT_TIMER      3
 
 // Configuración de ítems
 #define B_CONFUSE_BERRIES_HEAL      GEN_LATEST // Antes de Gen7, Figy y bayas similares restauran 1/8 de HP y se activan a la mitad de HP. En Gen7 restauran la mitad de HP, activándose al 25% de HP. En Gen8 curan 1/3 de HP.
@@ -271,6 +302,7 @@
 
 #define B_ABILITY_WEATHER               GEN_LATEST // En Gen6+, el clima inducido por habilidades dura 5 turnos. Antes, duraba hasta que terminara la batalla o hasta que fuera cambiado por un movimiento o una habilidad que afecte el clima.
 #define B_SANDSTORM_SPDEF_BOOST         GEN_LATEST // En Gen4+, la Tormenta de Arena multiplica la Defensa Esp. de los Pokémon de tipo Roca por 1.5.
+#define B_SANDSTORM_SOLAR_BEAM          GEN_LATEST // In Gen3+, Sandstorm decreases the power of Solar Beam, when it didn't before.
 #define B_OVERWORLD_FOG                 GEN_LATEST // In Gen8+, overworld Fog summons Misty Terrain in battle. In Gen4 only, overworld Fog summons the unique fog weather condition in battle.
 #define B_OVERWORLD_SNOW                GEN_LATEST // In Gen9+, overworld Snow will summon snow instead of hail in battle.
 #define B_SNOW_WARNING                  GEN_LATEST // En Gen9+, Snow Warning convocará nieve en lugar de granizo.
@@ -302,13 +334,17 @@
 #define B_ANIMATE_MON_AFTER_KO              TRUE // If set to TRUE, if a Pokémon on the opposite site faints, the non-fainted Pokemon will display a victory animation.
 #define B_ANIMATE_MON_AFTER_FAILED_POKEBALL TRUE  // If set to TRUE, if a Pokémon on the opposite side breaks out of a thrown Poké Ball, the wild Pokémon will display its animation.
 #define B_SHOW_DYNAMAX_MESSAGE              FALSE // If set to TRUE, an additional battle message is shown after completing Dynamaxing/Gigantamaxing.
+#define B_HPBAR_COLOR_THRESHOLD             GEN_LATEST // In Gen 5+, HP bar color thresholds were changed to be based on the actual HP values instead of the pixel length of the HP bar, leading to more accurate HP bar colors.
 
 // Configuración de Captura
-#define B_SEMI_INVULNERABLE_CATCH   GEN_LATEST // En Gen4+, no puedes lanzar una Poké Ball contra un Pokémon que está en un estado semi-invulnerable (excavar/volar/etc).
-#define B_CATCHING_CHARM_BOOST      100         // % de aumento en las probabilidades de Captura Crítica si el jugador tiene el Catching Charm.
-#define B_CRITICAL_CAPTURE          TRUE       // Si se establece en TRUE, la Captura Crítica estará habilitada.
+#define B_SEMI_INVULNERABLE_CATCH       GEN_LATEST // En Gen4+, no puedes lanzar una Poké Ball contra un Pokémon que está en un estado semi-invulnerable (excavar/volar/etc).
+#define B_CATCHING_CHARM_BOOST          100         // % de aumento en las probabilidades de Captura Crítica si el jugador tiene el Catching Charm.
+#define B_CRITICAL_CAPTURE              TRUE       // Si se establece en TRUE, la Captura Crítica estará habilitada.
 #define B_CRITICAL_CAPTURE_LOCAL_DEX    TRUE       // If set to FALSE, Critical Capture % is based off of the National Pokedex estimated by enabled generations.
 #define B_CRITICAL_CAPTURE_IF_OWNED     GEN_LATEST // In Gen9, a capture appear critical if the pokemon you are trying to catch already has a dex entry (has already been caught)
+#define B_INCAPACITATED_CATCH_BONUS     GEN_LATEST // In Gen5+, the catch rate bonus for a mon with sleep or freeze is 2.5x. In Gen4 and below its only a 2x bonus.
+#define B_LOW_LEVEL_CATCH_BONUS         GEN_LATEST // In Gen8, a bonus is added to the catch rate if catching a mon lower than level 20. In Gen9, the bonus is only applied to mons lower than level 13.
+#define B_MISSING_BADGE_CATCH_MALUS     GEN_LATEST // In Gen9, a penalty is added to the catch rate if trying to catch a mon 5 levels above the current obedience level, based on the number of gym badges obtained.
 
 #define B_LAST_USED_BALL            TRUE       // Si está habilitado, se implementará la característica de "última bola usada" de Gen 7.
 #define B_LAST_USED_BALL_BUTTON     R_BUTTON   // Si se implementa la última bola usada, este botón (o combinación de botones) activará el lanzamiento de la última Poké Ball usada.

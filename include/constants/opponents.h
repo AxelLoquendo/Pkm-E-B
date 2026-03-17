@@ -2,6 +2,7 @@
 #define GUARD_CONSTANTS_OPPONENTS_H
 
 #include "constants/battle_partner.h"
+#include "constants/opponents_frlg.h"
 
 // Ahora las flags de entrenadores están separadas de las flags tradicionales. Eso tiene como principal ventaja
 // que no están delimitadas a un cierto número: Puedes aumentar el número  de entrenadores tanto como quieras,
@@ -867,8 +868,15 @@ enum TrainerFlags
     TRAINER_BRENDAN_PLACEHOLDER,
     TRAINER_MAY_PLACEHOLDER,
 
-    TRAINERS_COUNT
+    TRAINERS_COUNT_EMERALD
 };
+
+
+#if IS_FRLG
+#define TRAINERS_COUNT                      TRAINERS_COUNT_FRLG
+#else
+#define TRAINERS_COUNT                      TRAINERS_COUNT_EMERALD
+#endif
 
 #define TRAINER_PARTNER(partner)           (TRAINERS_COUNT + partner)
 
