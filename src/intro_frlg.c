@@ -23,6 +23,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/sound.h"
+#include "intro_frlg.h"
 
 /*
     The intro is grouped into the following scenes

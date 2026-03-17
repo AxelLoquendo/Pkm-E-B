@@ -2832,6 +2832,7 @@
 	@ Elimina cualquier mugshot de la pantalla.
 	.macro hidemugshot
 	.byte 0xe8
+	.endm
 
 	@ Sets a starting status for the next battle. Can be stacked.
 	.macro setstartingstatus status:req
