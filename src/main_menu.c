@@ -1339,7 +1339,8 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     InitWindows(sNewGameBirchSpeechTextWindows);
     LoadMainMenuWindowFrameTiles(0, 0xF3);
     LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
-    NewGameBirchSpeech_ClearWindow(0, TRUE);
+    DrawTextBorderOuter(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+    NewGameBirchSpeech_ClearWindow(0);
 
     // 3. Configuración de posición y visibilidad inicial
     gSprites[gTasks[taskId].tBrendanSpriteId].x = 180; 
@@ -1403,9 +1404,10 @@ void CB2_NewGameBirchSpeech_FromNewMainMenu(void)
     // Cargamos los tiles del marco en la memoria
     LoadMainMenuWindowFrameTiles(0, 0xF3);
     LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+    DrawTextBorderOuter(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
     
     // Pintamos el marco ANTES de empezar
-    NewGameBirchSpeech_ClearWindow(0, TRUE);
+    NewGameBirchSpeech_ClearWindow(0);
     PutWindowTilemap(0);
     CopyWindowToVram(0, COPYWIN_FULL);
 
