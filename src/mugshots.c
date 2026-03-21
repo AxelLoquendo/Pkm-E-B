@@ -77,7 +77,7 @@ static const struct Mugshot sMugshots[] = {
         .x = 1,
         .y = 6,
         .width = 64,
-        .height = 64,
+        .height = 72,
         .image = sImg_Kaida_Normal,
         .palette = sPal_Kaida_Normal
     },
